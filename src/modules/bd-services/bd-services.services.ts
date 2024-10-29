@@ -20,6 +20,14 @@ export class BdServicesService {
       userName: dados.userName,
       senha: dados.senha,
     })) as usuarioTipo;
+
+    let userUp = usuarioEncontrado;
+    userUp.status = 'Disponível';
+    let usuarioOnline = await modeloUsuarios.updateOne(
+      { userName: dados.userName },
+      { $set: userUp },
+    );
+
     console.log(usuarioEncontrado.userName + ' foi autenticado com Sucesso!');
     const todosUsuarios = (await modeloUsuarios.find()) as usuarioTipo[];
     return { usuarioLogado: usuarioEncontrado, todosUsuarios: todosUsuarios };
